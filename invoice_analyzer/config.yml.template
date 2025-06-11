@@ -1,0 +1,10 @@
+# save the file with the right encoding
+currency: USD
+
+categories:
+    - name: market
+      max_value: 2000
+
+items_patterns_by_category:
+    pharmacy:
+        - .*pharmacy.*
