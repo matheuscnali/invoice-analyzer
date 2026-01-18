@@ -14,4 +14,4 @@ def parse_invoice(invoice_filepath) -> Invoice:
             name=e['title'],
             value=float(e['amount'])
         ))
-    return Invoice(bank='nubank', transactions=transactions)
+    return transactions

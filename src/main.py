@@ -31,7 +31,7 @@ def main():
         exit(1)
 
     print_dash()
-    info('Welcome to Invoice Analyzer')
+    info(f'Welcome to Invoice Analyzer v{VERSION}')
 
     config = get_config(args.config_filepath)
     invoice = parse_invoice(config.invoice_filepath, config.invoice_source)

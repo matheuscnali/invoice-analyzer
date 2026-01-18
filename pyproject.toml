@@ -1,5 +1,5 @@
 [project]
-name = "invoice-analyzer-backend"
+name = "invoice-analyzer"
 version = "0.0.0"
 description = ""
 authors = [
@@ -16,6 +16,8 @@ dependencies = [
     "loguru (>=0.7.3,<0.8.0)",
 ]
 
+[tool.poetry]
+package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
