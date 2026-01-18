@@ -1,0 +1,13 @@
+# save the file with the right encoding
+invoice_source: name of invoice source as supported by tool parsers
+invoice_filepath: path to the invoice file
+
+categories:
+    - name: market
+      max_value: 2000
+    # add as many wanted in this list
+
+items_patterns_by_category:
+    pharmacy:
+        - .*pharmacy.* # use insensitive regex in this list 
+    # match the category name with this dict key

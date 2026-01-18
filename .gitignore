@@ -1,0 +1,14 @@
+config.yml
+*.xlsx
+*.dll
+*.pyc
+*.pyd
+*.pyo
+__pycache__
+.idea/
+.vscode/
+.cache/
+.coverage
+.mypy_cache/
+.pytest_cache/
+*.log
