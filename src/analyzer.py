@@ -5,7 +5,7 @@ import pandas as pd
 from pandera.typing import DataFrame
 
 from .custom_types import (Analysis, CategorizedTransactions, Config, Invoice,
-                           InvoiceTransaction, ManualInput)
+                           InvoiceTransaction)
 from .utils.log import info
 
 
@@ -21,7 +21,7 @@ def get_category(
     return 'unknown'
 
 
-def analyze(invoice: Invoice, manual_input: ManualInput, config: Config) -> Analysis:
+def analyze(invoice: Invoice, config: Config) -> Analysis:
     info('  - Analyzing data')
     c=['date', 'item', 'value', 'category']
     categorized_transactions_df = pd.DataFrame(columns=c)
@@ -35,10 +35,6 @@ def analyze(invoice: Invoice, manual_input: ManualInput, config: Config) -> Anal
             category
         ]
         categories_spent_amount[category] += t.value
-
-    for m in manual_input:
-        categories_spent_amount[m.remove_from] -= m.value
-        categories_spent_amount[m.add_in] += m.value
 
     return Analysis(
         categorized_transactions=DataFrame[CategorizedTransactions](categorized_transactions_df),

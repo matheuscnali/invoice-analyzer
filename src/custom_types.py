@@ -31,18 +31,7 @@ class Config(BaseModel):
     categories: list[CategoryDescription]
     transactions_patterns_by_category: dict[str, list[str]]
 
-
-class ManualInputDescription(BaseModel):
-    remove_from: str
-    add_in: str
-    value: float
-    comment: str
-
-ManualInput = list[ManualInputDescription]
-
-
 BankInvoiceParse = Callable[[Path], Invoice]
-
 
 class CategorizedTransactions(pa.DataFrameModel):
     date: datetime

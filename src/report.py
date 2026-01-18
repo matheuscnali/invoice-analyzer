@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, Tuple, cast
+from typing import Optional, cast
 
 import pandas as pd
 

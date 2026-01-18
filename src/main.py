@@ -3,7 +3,7 @@ from pathlib import Path
 
 from .analyzer import analyze
 from .custom_types import Config
-from .parsers import parse_invoice, parse_manual_input
+from .parsers import parse_invoice
 from .report import generate_report
 from .utils.fs import read_yaml
 from .utils.log import info, print_dash
@@ -35,8 +35,7 @@ def main():
 
     config = get_config(args.config_filepath)
     invoice = parse_invoice(config.invoice_filepath, config.invoice_source)
-    manual_input = parse_manual_input(config.manual_input_filepath)
-    analysis = analyze(invoice, manual_input, config)
+    analysis = analyze(invoice, config)
     generate_report(analysis, config, VERSION)
 
     info('  - All done!')
