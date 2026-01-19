@@ -1,17 +1,10 @@
 from datetime import datetime
-from typing import Optional, cast
+from typing import cast
 
 import pandas as pd
 
-from .custom_types import Analysis, CategoryDescription, Config
+from .custom_types import Analysis, Config
 from .utils.log import info
-
-
-def get_category_max_value(category: str, categories: list[CategoryDescription]) -> Optional[float]:
-    for c in categories:
-        if c.name == category:
-            return c.max_value
-    return None
 
 
 def get_categorized_transactions_report_df(
@@ -40,11 +33,7 @@ def get_categories_spent_amount_report_df(
 ) -> pd.DataFrame:
     return pd.DataFrame({
         'Category': categories_spent_amount.keys(),
-        'Spent Amount': categories_spent_amount.values(),
-        'Expected Amount': [
-            get_category_max_value(c, config.categories) or 'Undefined'
-                for c in categories_spent_amount
-        ]
+        'Spent Amount': categories_spent_amount.values()
     })
 
 def generate_report(analysis: Analysis, config: Config, version: str):

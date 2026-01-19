@@ -23,7 +23,7 @@ def get_category(
 
 def analyze(invoice: Invoice, config: Config) -> Analysis:
     info('  - Analyzing data')
-    c=['date', 'item', 'value', 'category']
+    c = ['date', 'item', 'value', 'category']
     categorized_transactions_df = pd.DataFrame(columns=c)
     categories_spent_amount: dict[str, float] = defaultdict(lambda: float(0))
     for i, t in enumerate(invoice):

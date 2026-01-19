@@ -1,12 +1,12 @@
 from pathlib import Path
 
-from ..custom_types import BankInvoiceParse, Invoice, InvoiceSource
+from ..custom_types import BankInvoiceParser, Invoice, InvoiceSource
 from ..utils.log import info
 from .mobilis import parse_invoice as mobilis_parse_invoice
 from .nubank import parse_invoice as nubank_parse_invoice
 
 
-def get_bank_parse_invoice_fn(invoice_source: InvoiceSource) -> BankInvoiceParse:
+def get_bank_parse_invoice_fn(invoice_source: InvoiceSource) -> BankInvoiceParser:
     if invoice_source == 'nubank':
         return nubank_parse_invoice
     elif invoice_source == 'mobilis':

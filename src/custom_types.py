@@ -18,20 +18,12 @@ class InvoiceTransaction(BaseModel):
 
 Invoice = list[InvoiceTransaction]
 
-
-class CategoryDescription(BaseModel):
-    name: str
-    max_value: float
-
-
 class Config(BaseModel):
     invoice_filepath: FilePath
     invoice_source: InvoiceSource
-    manual_input_filepath: Optional[FilePath] = None
-    categories: list[CategoryDescription]
     transactions_patterns_by_category: dict[str, list[str]]
 
-BankInvoiceParse = Callable[[Path], Invoice]
+BankInvoiceParser = Callable[[Path], Invoice]
 
 class CategorizedTransactions(pa.DataFrameModel):
     date: datetime
