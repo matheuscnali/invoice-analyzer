@@ -7,13 +7,6 @@ from .custom_types import Analysis, CategoryDescription, Config
 from .utils.log import info
 
 
-def get_category_max_value(category: str, categories: list[CategoryDescription]) -> Optional[float]:
-    for c in categories:
-        if c.name == category:
-            return c.max_value
-    return None
-
-
 def get_categorized_transactions_report_df(
     df: pd.DataFrame
 ) -> dict[str, pd.DataFrame]:
@@ -35,16 +28,11 @@ def get_categorized_transactions_report_df(
 
 
 def get_categories_spent_amount_report_df(
-    categories_spent_amount: dict[str, float],
-    config: Config
+    categories_spent_amount: dict[str, float]
 ) -> pd.DataFrame:
     return pd.DataFrame({
         'Category': categories_spent_amount.keys(),
-        'Spent Amount': categories_spent_amount.values(),
-        'Expected Amount': [
-            get_category_max_value(c, config.categories) or 'Undefined'
-                for c in categories_spent_amount
-        ]
+        'Spent Amount': categories_spent_amount.values()
     })
 
 def generate_report(analysis: Analysis, config: Config, version: str):
@@ -52,7 +40,7 @@ def generate_report(analysis: Analysis, config: Config, version: str):
     file_path = f"Invoice Analyzer v{version} - {config.invoice_source.title()} - {datetime.now().strftime('%Y-%b-%d')}.xlsx"
 
     categorized_transactions_report_df = get_categorized_transactions_report_df(analysis.categorized_transactions)
-    categories_spent_amount_report_df = get_categories_spent_amount_report_df(analysis.categories_spent_amount, config)
+    categories_spent_amount_report_df = get_categories_spent_amount_report_df(analysis.categories_spent_amount)
     dfs_by_sheet_name = {
         'Categorized Transactions': categorized_transactions_report_df['others_categories'],
         'Unknown Transactions': categorized_transactions_report_df['unknown_category'],

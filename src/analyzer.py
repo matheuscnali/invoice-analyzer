@@ -5,18 +5,18 @@ import pandas as pd
 from pandera.typing import DataFrame
 
 from .custom_types import (Analysis, CategorizedTransactions, Config, Invoice,
-                           InvoiceTransaction)
+                           InvoiceTransaction, CategoryDescription)
 from .utils.log import info
 
 
 def get_category(
     transaction: InvoiceTransaction,
-    transactions_patterns_by_category: dict[str, list[str]]
+    categories: list[CategoryDescription]
 ) -> str:
-    for c, patterns in transactions_patterns_by_category.items():
-        for p in patterns:
+    for c in categories:
+        for p in c.patterns:
             if re.search(p, transaction.name, re.IGNORECASE):
-                return c
+                return c.name
 
     return 'unknown'
 
@@ -27,7 +27,7 @@ def analyze(invoice: Invoice, config: Config) -> Analysis:
     categorized_transactions_df = pd.DataFrame(columns=c)
     categories_spent_amount: dict[str, float] = defaultdict(lambda: float(0))
     for i, t in enumerate(invoice):
-        category = get_category(t, config.transactions_patterns_by_category)
+        category = get_category(t, config.categories)
         categorized_transactions_df.loc[i]= [
             t.date,
             t.name,
