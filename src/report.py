@@ -14,6 +14,11 @@ def get_categorized_transactions_report_df(
         lambda r: r['date'].strftime('%d/%m/%Y'),
         axis=1
     )
+    df['value'] = df.apply(
+        lambda r: int(r['value']) if r['value'] > 1 else r['value'],
+        axis=1
+    )
+
     df = df.rename({
         'date': 'Date',
         'item': 'Item',
@@ -32,7 +37,7 @@ def get_categories_spent_amount_report_df(
 ) -> pd.DataFrame:
     return pd.DataFrame({
         'Category': categories_spent_amount.keys(),
-        'Spent Amount': categories_spent_amount.values()
+        'Spent Amount': [int(v) for v in categories_spent_amount.values()]
     })
 
 def generate_report(analysis: Analysis, config: Config, version: str):
