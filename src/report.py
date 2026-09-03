@@ -1,9 +1,9 @@
 from datetime import datetime
-from typing import Optional, cast
+from typing import cast
 
 import pandas as pd
 
-from .custom_types import Analysis, CategoryDescription, Config
+from .custom_types import Analysis, Config
 from .utils.log import info
 
 
@@ -12,10 +12,6 @@ def get_categorized_transactions_report_df(
 ) -> dict[str, pd.DataFrame]:
     df['date'] = df.apply(
         lambda r: r['date'].strftime('%d/%m/%Y'),
-        axis=1
-    )
-    df['value'] = df.apply(
-        lambda r: int(r['value']) if r['value'] > 1 else r['value'],
         axis=1
     )
 
