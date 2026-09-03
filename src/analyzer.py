@@ -13,12 +13,20 @@ def get_category(
     transaction: InvoiceTransaction,
     categories: list[CategoryDescription]
 ) -> str:
+    matches = []
     for c in categories:
         for p in c.patterns:
-            if re.search(p, transaction.name, re.IGNORECASE):
-                return c.name
+            if re.match(p, transaction.name, re.IGNORECASE):
+                matches.append(c.name)
 
-    return 'unknown'
+    matches = set(matches)
+
+    if len(matches) == 0:
+        return 'unknown'
+    elif len(matches) == 1:
+        return matches.pop()
+    else:
+        raise ValueError(f"Expected to match only one category but got {matches} for transaction {transaction}")
 
 
 def analyze(invoice: Invoice, config: Config) -> Analysis:

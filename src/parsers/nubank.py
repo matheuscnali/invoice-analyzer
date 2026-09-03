@@ -12,6 +12,6 @@ def parse_invoice(invoice_filepath) -> Invoice:
         transactions.append(InvoiceTransaction(
             date=datetime.strptime(e['date'], '%Y-%m-%d'),
             name=e['title'],
-            value=float(e['amount'])
+            value=float(e['amount'].replace(' ', '').replace('.', '').replace(',', '.'))
         ))
     return transactions

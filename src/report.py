@@ -1,9 +1,9 @@
 from datetime import datetime
-from typing import Optional, cast
+from typing import cast
 
 import pandas as pd
 
-from .custom_types import Analysis, CategoryDescription, Config
+from .custom_types import Analysis, Config
 from .utils.log import info
 
 
@@ -14,6 +14,7 @@ def get_categorized_transactions_report_df(
         lambda r: r['date'].strftime('%d/%m/%Y'),
         axis=1
     )
+
     df = df.rename({
         'date': 'Date',
         'item': 'Item',
@@ -32,7 +33,7 @@ def get_categories_spent_amount_report_df(
 ) -> pd.DataFrame:
     return pd.DataFrame({
         'Category': categories_spent_amount.keys(),
-        'Spent Amount': categories_spent_amount.values()
+        'Spent Amount': [int(v) for v in categories_spent_amount.values()]
     })
 
 def generate_report(analysis: Analysis, config: Config, version: str):

@@ -1,9 +1,9 @@
 from datetime import datetime
 from pathlib import Path
-from typing import Callable, Literal, Optional
+from typing import Callable, Literal
 
 import pandera.pandas as pa
-from pandera.typing import DataFrame
+import pandas as pd
 from pydantic import BaseModel, FilePath
 
 Banks = Literal['nubank']
@@ -38,5 +38,8 @@ class CategorizedTransactions(pa.DataFrameModel):
 
 
 class Analysis(BaseModel):
-    categorized_transactions: DataFrame[CategorizedTransactions]
+    categorized_transactions: pd.DataFrame
     categories_spent_amount: dict[str, float]
+
+    class Config:
+        arbitrary_types_allowed = True
